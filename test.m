@@ -8,8 +8,8 @@
 % grid on
 % hold off
 %%
-call = blsprice(50, 50, 0.1, 5/12, 0.4);
-
-
+% call = blsprice(50, 50, 0.1, 5/12, 0.4);
+%%
+AAA=optionC{1};
 
 

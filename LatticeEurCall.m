@@ -14,3 +14,4 @@ for j=N-1:-1:0
     end
 end
 price = lattice(1,1);
+end

@@ -1,6 +1,6 @@
 % Computational Finance CW2
-% Question 1
-
+% Question 2
+load options.mat
 
 
 
