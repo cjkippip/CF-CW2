@@ -14,6 +14,7 @@ for i=1:N
     SVals(N+1-i) = d*SVals(N+2-i);
 end
 PVals = zeros(2*N+1,1);
+
 for i=1:2:2*N+1
     PVals(i) = max(K-SVals(i),0);
 end
@@ -27,5 +28,6 @@ end
 price = PVals(N+1);
 
 end
+
 
 

@@ -1,6 +1,6 @@
 % Computational Finance CW2
 % Question 5
-S0=50;K=66;r=0.1;T=5/12;sigma=0.4;
+S0=50;K=66;r=0.06;T=5/12;sigma=0.4;
 
 callL=ones(1,50);
 callB=ones(1,50)*blsprice(S0,K,r,T,sigma);
@@ -11,7 +11,7 @@ end
 xx=1:50;
 figure(1),clf,
 plot(xx,callL,'b','LineWidth',2);
-title('Mean Variance Porfolio','FontSize',15)
+title('Comparison between BS and Lattice','FontSize',15)
 xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
 ylabel('Call option price','FontSize',13,'FontWeight','bold')
 hold on
@@ -20,7 +20,7 @@ legend({'LatticeEurCall','BS Model'},'Location','east','FontSize',13,'FontWeight
 grid on
 hold off
 %%
-S0=50;K=50;r=0.1;T=5/12;sigma=0.4;
+S0=50;K=50;r=0.06;T=5/12;sigma=0.4;
 
 callL=ones(1,50);
 callB=ones(1,50)*blsprice(S0,K,r,T,sigma);
@@ -31,7 +31,7 @@ end
 xx=1:50;
 figure(2),clf,
 plot(xx,callL,'b','LineWidth',2);
-title('Mean Variance Porfolio','FontSize',15)
+title('Comparison between BS and Lattice','FontSize',15)
 xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
 ylabel('Call option price','FontSize',13,'FontWeight','bold')
 hold on
