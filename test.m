@@ -37,15 +37,23 @@
 % figure(22),clf
 % plot(yyy);
 %%
-i=30;
-S=stockPrice(randDays(i));
-K=strikePrices(1);
-r=0.06;
-T=(L-randDays(i))/252;
-V=optionCPrice(randDays(i),1);
-aaa=blsimpv(S, K, r, T, V, [], [], [], {'Call'});
+% i=30;
+% S=stockPrice(randDays(i));
+% K=strikePrices(1);
+% r=0.06;
+% T=(L-randDays(i))/252;
+% V=optionCPrice(randDays(i),1);
+% aaa=blsimpv(S, K, r, T, V, [], [], [], {'Call'});
 %%
-aaa=blsimpv(9, 999, 0.06, 222/252, 23, [], [], [], {'Call'});
+% aaa=blsimpv(9, 999, 0.06, 222/252, 23, [], [], [], {'Call'});
+%%
+% S=50;
+% K=52;
+% r=0.05;
+% T=2;
+% N=2;
+% aaa=AmPutLattice(S,K,r,T,N);
+
 
 
 
