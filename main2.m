@@ -26,9 +26,10 @@ end
 trueOptionCPrice=optionCPrice(Lwin+1:L,optionNum);
 trueOptionPPrice=optionPPrice(Lwin+1:L,optionNum);
 % %% Call option
-xx1=1:167;
+xx1=56:222;
 figure(1),clf,
 plot(xx1,BSOptionCPrice,'b','LineWidth',1.5);
+axis([56,222,0,inf])
 title('Comparison between BS and true price of call option','FontSize',15)
 ylabel('Call option price','FontSize',13,'FontWeight','bold')
 xlabel('time(T/4+1 to T)','FontSize',13,'FontWeight','bold')
@@ -36,10 +37,12 @@ hold on
 plot(xx1,trueOptionCPrice,'r','LineWidth',1.5);
 legend({'BS price','True price'},'Location','northeast','FontSize',13,'FontWeight','bold');
 grid on
+grid minor
 hold off
 % %% Put option
 figure(2),clf,
 plot(xx1,BSOptionPPrice,'b','LineWidth',1.5);
+axis([56,222,0,inf])
 title('Comparison between BS and true price of put option','FontSize',15)
 ylabel('Put option price','FontSize',13,'FontWeight','bold')
 xlabel('time(T/4+1 to T)','FontSize',13,'FontWeight','bold')
@@ -47,9 +50,11 @@ hold on
 plot(xx1,trueOptionPPrice,'r','LineWidth',1.5);
 legend({'BS price','True price'},'Location','northeast','FontSize',13,'FontWeight','bold');
 grid on
+grid minor
 hold off
 
 %% Q3
+optionNum=1;
 randDays=randperm(167,30);
 randDays=randDays+55;
 impVols30=ones(30,1);
@@ -60,7 +65,7 @@ for i=1:30
     r=0.06;
     T=(L-randDays(i))/252;
     V=optionCPrice(randDays(i),1);
-    impVols30(i)=blsimpv(S, K, r, T, V, [], [], [], {'Call'});
+    impVols30(i)=blsimpv(S, K, r, T, V);
     hisVols30(i)=hisVols(randDays(i)-55);
 end
 %%
@@ -81,7 +86,7 @@ for i=1:numK
     T=(L-randDays(2))/252;
     V=optionCPrice(randDays(2),1);
        
-    impVols100(i)=blsimpv(S, K(i), r, T, V, [], 0, [], {'Call'});
+    impVols100(i)=blsimpv(S, K(i), r, T, V);
     
 end
 %%
