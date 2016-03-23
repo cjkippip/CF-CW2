@@ -53,13 +53,22 @@
 % T=2;
 % N=2;
 % aaa=AmPutLattice(S,K,r,T,N);
-
-
-
-
-
-
-
+%%
+S=50;
+K=50;
+r=0.05;
+T=1;
+sigma=0.2;
+NRepl=1000000;
+price=ones(5,1);
+nuT = (r - 0.5*sigma^2)*T;
+DiscPayoff = exp(-r*T)*(S*exp(nuT)-K);
+for i=1:5
+    randn('state',i);
+    price(i) = BlsMC1(S,K,r,T,sigma,NRepl);
+end
+%%
+[BScall,BSput] = blsprice(S,K,r,T,sigma);
 
 
 
