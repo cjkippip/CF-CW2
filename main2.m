@@ -1,7 +1,7 @@
 % Computational Finance CW2
-% Question 2-3
+% Question 2-3,5
 load options.mat
-%% Q2
+%% Qusetion 2
 optionNum=1;
 strikePrices=[2925 3025 3125 3225 3325];
 L=length(stockPrice);
@@ -53,9 +53,9 @@ grid on
 grid minor
 hold off
 
-%% Q3
-optionNum=2;
-randomNum=167;
+%% Qusetion 3
+optionNum=4;
+randomNum=50;
 randDays=randperm(167,randomNum);
 randDays=randDays+55;
 impVolsRand=ones(randomNum,1);
@@ -67,7 +67,8 @@ for i=1:randomNum
     r=0.06;
     T=(L-randDays(i))/252;
     maturity(i)=T;
-    V=optionCPrice(randDays(i),1);
+    V=optionCPrice(randDays(i),optionNum);
+    
     impVolsRand(i)=blsimpv(S, K, r, T, V);
     hisVolsRand(i)=hisVols(randDays(i)-55);
 end
@@ -81,7 +82,7 @@ grid on
 hold off
 %%
 numK=600;
-optionNum=5;
+optionNum=1;
 impVols100=ones(numK,1);
 K=linspace(2801,3400,numK);
 for i=1:numK
@@ -90,15 +91,127 @@ for i=1:numK
     T=(L-randDays(2))/252;
     V=optionCPrice(randDays(2),optionNum);
        
-    impVols100(i)=blsimpv(S, K(i), r, T, V);
-    
+    impVols100(i)=blsimpv(S, K(i), r, T, V);  
 end
 
 figure(4),clf,
-scatter(K,impVols100,'b.','LineWidth',2);
-title('Comparison between implied volatility and historical volatility','FontSize',15)
-ylabel('','FontSize',13,'FontWeight','bold')
-xlabel('','FontSize',13,'FontWeight','bold')
+plot(K,impVols100,'b','LineWidth',2);
+title('Implied volatility with different strike prices','FontSize',15)
+ylabel('Implied volatility','FontSize',13,'FontWeight','bold')
+xlabel('Stike price','FontSize',13,'FontWeight','bold')
 grid on
 hold off
+%% Qusetion 5
+dayNum=150;
+optionNum=2;
+step=100;
+
+S0=stockPrice(dayNum);K=strikePrices(optionNum);
+r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
+
+callL=ones(1,step);
+callB=ones(1,step)*blsprice(S0,K,r,T,sigma);
+for i=1:step   
+    callL(1,i)=LatticeEurCall(S0,K,r,T,sigma,i); 
+end
+
+xx=1:step;
+figure(5),clf,
+plot(xx,callL,'b','LineWidth',2);
+title('Comparison between BS and Lattice(Eur Call)','FontSize',15)
+xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
+ylabel('Call option price','FontSize',13,'FontWeight','bold')
+hold on
+plot(xx,callB,'r','LineWidth',2);
+legend({'LatticeEurCall','BS Model'},'Location','northeast','FontSize',13,'FontWeight','bold');
+grid on
+hold off
+%%
+dayNum=56;
+optionNum=2;
+step=100;
+
+S0=stockPrice(dayNum);K=strikePrices(optionNum);
+r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
+
+callL=ones(1,step);
+callB=ones(1,step)*blsprice(S0,K,r,T,sigma);
+for i=1:step   
+    callL(1,i)=LatticeEurCall(S0,K,r,T,sigma,i); 
+end
+
+xx=1:step;
+figure(6),clf,
+plot(xx,callL,'b','LineWidth',2);
+title('Comparison between BS and Lattice(Eur Call)','FontSize',15)
+xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
+ylabel('Call option price','FontSize',13,'FontWeight','bold')
+hold on
+plot(xx,callB,'r','LineWidth',2);
+legend({'LatticeEurCall','BS Model'},'Location','northeast','FontSize',13,'FontWeight','bold');
+grid on
+hold off
+%% Qusetion 6
+dayNum=150;
+optionNum=2;
+step=100;
+
+S0=stockPrice(dayNum);K=strikePrices(optionNum);
+r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
+
+putL=ones(1,step);
+[call,put]=blsprice(S0,K,r,T,sigma);
+putB=ones(1,step)*put;
+for i=1:step   
+    putL(1,i)=AmPutLattice(S0,K,r,T,sigma,i); 
+end
+
+xx=1:step;
+figure(7),clf,
+plot(xx,putL,'b','LineWidth',2);
+title('Comparison between BS and Lattice(Am Put)','FontSize',15)
+xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
+ylabel('Put option price','FontSize',13,'FontWeight','bold')
+hold on
+plot(xx,putB,'r','LineWidth',2);
+legend({'LatticeAmPut','BS Model'},'Location','northeast','FontSize',13,'FontWeight','bold');
+grid on
+hold off
+%%
+dayNum=150;
+optionNum=2;
+step=100;
+
+S0=stockPrice(dayNum);K=strikePrices(optionNum);
+r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
+
+putL=ones(1,step);
+[call,put]=blsprice(S0,K,r,T,sigma);
+putB=ones(1,step)*call;
+for i=1:step   
+    putL(1,i)=AmCallLattice(S0,K,r,T,sigma,i); 
+end
+
+xx=1:step;
+figure(8),clf,
+plot(xx,putL,'b','LineWidth',2);
+title('Comparison between BS and Lattice(Am Call)','FontSize',15)
+xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
+ylabel('Call option price','FontSize',13,'FontWeight','bold')
+hold on
+plot(xx,putB,'r','LineWidth',2);
+legend({'LatticeAmCall','BS Model'},'Location','southeast','FontSize',13,'FontWeight','bold');
+grid on
+hold off
+
+
+
+
+
+
+
+
+
+
+
 
