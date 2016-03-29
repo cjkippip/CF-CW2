@@ -54,8 +54,8 @@ grid minor
 hold off
 
 %% Qusetion 3
-optionNum=4;
-randomNum=50;
+optionNum=1;
+randomNum=167;
 randDays=randperm(167,randomNum);
 randDays=randDays+55;
 impVolsRand=ones(randomNum,1);
@@ -75,6 +75,7 @@ end
 
 figure(3),clf,
 scatter(hisVolsRand,impVolsRand,'b','LineWidth',2);
+axis([0.05,0.25,0.05,0.25]);
 title('Comparison between implied volatility and historical volatility','FontSize',15)
 ylabel('implied volatility','FontSize',13,'FontWeight','bold')
 xlabel('historical volatility','FontSize',13,'FontWeight','bold')

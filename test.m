@@ -69,6 +69,16 @@ for i=1:5
 end
 %%
 [BScall,BSput] = blsprice(S,K,r,T,sigma);
+%%
+AA1=[4 9;16 25];
+AA2=sqrt(AA1);
+
+
+
+
+
+
+
 
 
 
