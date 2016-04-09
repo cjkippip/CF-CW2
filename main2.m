@@ -25,7 +25,7 @@ for i=1:Lrest
 end
 trueOptionCPrice=optionCPrice(Lwin+1:L,optionNum);
 trueOptionPPrice=optionPPrice(Lwin+1:L,optionNum);
-% %% Call option
+% Call option
 xx1=56:222;
 figure(1),clf,
 plot(xx1,BSOptionCPrice,'b','LineWidth',1.5);
@@ -39,7 +39,7 @@ legend({'BS price','True price'},'Location','northeast','FontSize',13,'FontWeigh
 grid on
 grid minor
 hold off
-% %% Put option
+% Put option
 figure(2),clf,
 plot(xx1,BSOptionPPrice,'b','LineWidth',1.5);
 axis([56,222,0,inf])
@@ -54,6 +54,7 @@ grid minor
 hold off
 
 %% Qusetion 3
+% plot implied volatility against historic volatility
 optionNum=1;
 randomNum=167;
 randDays=randperm(167,randomNum);
@@ -82,16 +83,18 @@ xlabel('historical volatility','FontSize',13,'FontWeight','bold')
 grid on
 hold off
 %%
-numK=600;
-optionNum=1;
+% implied colatility with different strike price
+numK=200;
+optionNum=3;
 impVols100=ones(numK,1);
-K=linspace(2801,3400,numK);
+K=linspace(2801,3800,numK);
+numRandDay=2;
 for i=1:numK
-    S=stockPrice(randDays(2));
+    S=stockPrice(randDays(numRandDay));
     r=0.06;
-    T=(L-randDays(2))/252;
-    V=optionCPrice(randDays(2),optionNum);
-       
+    T=(L-randDays(numRandDay))/252;
+%     V=optionCPrice(randDays(numRandDay),optionNum);
+    V=optionPPrice(randDays(numRandDay),optionNum);
     impVols100(i)=blsimpv(S, K(i), r, T, V);  
 end
 
@@ -102,6 +105,10 @@ ylabel('Implied volatility','FontSize',13,'FontWeight','bold')
 xlabel('Stike price','FontSize',13,'FontWeight','bold')
 grid on
 hold off
+%%
+
+
+
 %% Qusetion 5
 dayNum=150;
 optionNum=2;
@@ -186,21 +193,21 @@ step=100;
 S0=stockPrice(dayNum);K=strikePrices(optionNum);
 r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
 
-putL=ones(1,step);
+callL=ones(1,step);
 [call,put]=blsprice(S0,K,r,T,sigma);
-putB=ones(1,step)*call;
+callB=ones(1,step)*call;
 for i=1:step   
-    putL(1,i)=AmCallLattice(S0,K,r,T,sigma,i); 
+    callL(1,i)=AmCallLattice(S0,K,r,T,sigma,i); 
 end
 
 xx=1:step;
 figure(8),clf,
-plot(xx,putL,'b','LineWidth',2);
+plot(xx,callL,'b','LineWidth',2);
 title('Comparison between BS and Lattice(Am Call)','FontSize',15)
 xlabel('Increasing N(decreasing step time)','FontSize',13,'FontWeight','bold')
 ylabel('Call option price','FontSize',13,'FontWeight','bold')
 hold on
-plot(xx,putB,'r','LineWidth',2);
+plot(xx,callB,'r','LineWidth',2);
 legend({'LatticeAmCall','BS Model'},'Location','southeast','FontSize',13,'FontWeight','bold');
 grid on
 hold off
