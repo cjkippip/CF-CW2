@@ -81,9 +81,8 @@ title('Comparison between implied volatility and historical volatility','FontSiz
 ylabel('implied volatility','FontSize',13,'FontWeight','bold')
 xlabel('historical volatility','FontSize',13,'FontWeight','bold')
 grid on
-hold off
 %%
-% implied colatility with different strike price
+% implied volatility with different strike price
 numK=200;
 optionNum=3;
 impVols100=ones(numK,1);
@@ -104,11 +103,29 @@ title('Implied volatility with different strike prices','FontSize',15)
 ylabel('Implied volatility','FontSize',13,'FontWeight','bold')
 xlabel('Stike price','FontSize',13,'FontWeight','bold')
 grid on
-hold off
 %%
-
-
-
+% implied volatility with 5 different strike prices in any particular day
+numK=5;
+randomNum=167;
+randDays=randperm(167,randomNum);
+numRandDay=5;
+impVols5=ones(numK,1);
+for i=1:numK
+    S=stockPrice(randDays(numRandDay));
+    r=0.06;
+    T=(L-randDays(numRandDay))/252;
+    V=optionPPrice(randDays(numRandDay),optionNum);
+    impVols5(i)=blsimpv(S, strikePrices(i), r, T, V);  
+end
+figure(9),clf,
+plot(strikePrices,impVols5,'b','LineWidth',1);
+hold on
+scatter(strikePrices,impVols5,'b','LineWidth',2);
+title('Implied volatility with different strike prices','FontSize',15)
+ylabel('Implied volatility','FontSize',13,'FontWeight','bold')
+xlabel('Stike price','FontSize',13,'FontWeight','bold')
+grid on
+hold off
 %% Qusetion 5
 dayNum=150;
 optionNum=2;
