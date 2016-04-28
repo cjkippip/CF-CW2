@@ -19,10 +19,11 @@ for i=1:Lrest
     S=stockPrice(Lwin+i);
     K=strikePrices(optionNum);
     r=0.06;
-    T=(Lrest-i)/252;
+    T=(Lrest-i+1)/252;
     
     [BSOptionCPrice(i),BSOptionPPrice(i)]=blsprice(S,K,r,T,hisVols(i));
 end
+%%
 trueOptionCPrice=optionCPrice(Lwin+1:L,optionNum);
 trueOptionPPrice=optionPPrice(Lwin+1:L,optionNum);
 % Call option
@@ -185,7 +186,7 @@ S0=stockPrice(dayNum);K=strikePrices(optionNum);
 r=0.06;T=(L-dayNum)/252;sigma=hisVols(dayNum-55);
 
 putL=ones(1,step);
-[call,put]=blsprice(S0,K,r,T,sigma);
+[~,put]=blsprice(S0,K,r,T,sigma);
 putB=ones(1,step)*put;
 for i=1:step   
     putL(1,i)=AmPutLattice(S0,K,r,T,sigma,i); 
